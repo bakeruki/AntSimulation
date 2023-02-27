@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.bakeruki.antsimulation.simulation.SimScreen;
 import com.bakeruki.antsimulation.simulation.ant.Ant;
 
 public class Colony {
@@ -25,21 +26,23 @@ public class Colony {
     /*
      * Radius of colony.
      */
-    private float r;
+    private final float r = 50;
 
     /**
      * ArrayList of all ants that belong to this colony.
      */
     private ArrayList<Ant> ants;
 
+    private SimScreen world;
+
     private Texture colonyTexture;
 
-    public Colony(float x, float y, int numAnts){
+    public Colony(float x, float y, int numAnts, SimScreen world){
         this.rand = new Random();
         this.x = x;
         this.y = y;
-        this.r = 100;
         this.ants = new ArrayList<>();
+        this.world = world;
         this.NUM_ANTS = numAnts;
         this.colonyTexture = new Texture(Gdx.files.internal("colony.png"));
     }
@@ -64,7 +67,7 @@ public class Colony {
             float x = (float)(r * Math.cos(Math.toRadians(t)) + this.x);
             float y = (float)(r * Math.sin(Math.toRadians(t)) + this.y);
             //add to arraylist of ants
-            ants.add(new Ant(x, y, t, this));
+            ants.add(new Ant(x, y, t, this, world));
         }
     }
 
@@ -81,10 +84,10 @@ public class Colony {
     /**
      * Moves all of the ants.
      */
-    public void simulate(){
+    public void simulate(float dt){
         //int i = 1;
         for(Ant ant: ants){
-            ant.move();
+            ant.move(dt);
             //printAntInfo(ant, i);
             //i++;
         }

@@ -2,9 +2,11 @@ package com.bakeruki.antsimulation.simulation.ant;
 
 import java.util.Random;
 
+import com.bakeruki.antsimulation.simulation.colony.Colony;
+
 public class Ant {
-    private final float width = 55;
-    private final float height = 50;
+    private final float width = 14;
+    private final float height = 12.5f;
     private final float speed = 1f;
     private final float wanderStrength = 0.02f;
 
@@ -13,13 +15,15 @@ public class Ant {
     private float x;
     private float y;
     private float direction;
+    private Colony home;
 
-    public Ant(float x, float y, float direction){
+    public Ant(float x, float y, float direction, Colony colony){
         this.rand = new Random();
 
         this.x = x;
         this.y = y;
         this.direction = direction;
+        this.home = colony;
     }
 
     public void move(){
